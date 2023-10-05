@@ -1,0 +1,66 @@
+﻿<Window x:Class="NetworkPragramming.ServerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NetworkPragramming"
+        mc:Ignorable="d"
+        Title="ServerWindow" Height="450" Width="300"
+        Closing="Window_Closing">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="3*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <GroupBox Header="Налаштування">
+            <Grid>
+                <Grid.Resources>
+                    <Style  TargetType="TextBlock">
+                        <Setter Property="VerticalAlignment"
+                                Value="Center"></Setter>
+                    </Style>
+                    <Style TargetType="Label">
+                        <Setter Property="VerticalAlignment"
+            Value="Center"></Setter>
+                    </Style>
+                </Grid.Resources>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Label Content="Host (IP)" Grid.Row="0"></Label>
+                <Label Content="Port" Grid.Row="1"></Label>
+                <Label Content="Charset" Grid.Row="2"></Label>
+                <TextBlock x:Name="HostTextBox" Grid.Row="0" Grid.Column="1"
+                           Text="127.0.0.1"></TextBlock>
+                <TextBlock x:Name="PortTextBox" Grid.Row="1" Grid.Column="2"
+                           Text="9541"></TextBlock>
+                <TextBlock x:Name="CharsetTextBox" Grid.Row="2" Grid.Column="3"
+                           Text="UTF-8"></TextBlock>
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="Статус" Grid.Column="1">
+        <DockPanel VerticalAlignment="Stretch">
+            <Label Content="Вимкнуто"  DockPanel.Dock="Top"
+                   HorizontalContentAlignment="Center"
+                   Background="Pink"
+                   x:Name="StatusLabel"/>
+            <Button Content="Включити"
+                    VerticalContentAlignment="Center"
+                    x:Name="SwitchServer"
+                    Click="SwitchServer_Click"/>
+        </DockPanel>
+    </GroupBox>
+        <TextBlock Grid.Row="1" Grid.ColumnSpan="2"
+                   x:Name="ServerLog"/>
+    </Grid>
+</Window>
