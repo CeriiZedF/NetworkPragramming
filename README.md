@@ -12,6 +12,7 @@ https://github.com/CeriiZedF/NetworkPragramming/blob/e7c4723c18343cf69fdee56066e
 - при успішному статусі: зелений фон + "надіслано"
 - - при помилці: червоний фон + "помилка"
  прибирати це повідомлення через 3 секунди після показу
+https://github.com/CeriiZedF/NetworkPragramming/blob/40fb4670f1bd3f645b5ccf1ad326327c25d14d2b/ClientWindow.xaml.cs#L191
 
 4)Д.З. Реалізувати відображення часу повідомлення на клієнті
 у "розумному" стилі: якщо у межах поточної дати, то 
