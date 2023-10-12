@@ -156,7 +156,7 @@ namespace NetworkPragramming
                     {
                         foreach (var message in response.messages)
                         {
-                            str += message.Moment + "   :   " + message + "\n";
+                            str += message.Moment + "  Asd :   " + message + "\n";
                             // та оновлюємо момент синхронізації
                             if (message.Moment > lastSyncMoment)
                             {
