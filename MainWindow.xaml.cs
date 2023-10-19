@@ -19,6 +19,7 @@ namespace NetworkPragramming
         public MainWindow()
         {
             InitializeComponent();
+            /*App.GetConfiguration("smtp:host");*/   // можно замість : -> .
         }
         #region Server
         private void ServerButton_Click(object sender, RoutedEventArgs e)
@@ -33,5 +34,17 @@ namespace NetworkPragramming
             new ClientWindow().Show();
         }
         #endregion
+
+        private void EmailButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
+            new EmailWindow().ShowDialog();
+            this.Show();
+        }
+
+        private void ConfirmButton_Click(object sender, RoutedEventArgs e)
+        {
+            new AuthWindow().ShowDialog();
+        }
     }
 }

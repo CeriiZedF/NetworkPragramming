@@ -43,6 +43,7 @@ namespace NetworkPragramming
             MessageTextBox.Text = "Hello, all!";
             isServerOn = true;
             Sync();
+            
         }
 
         private void SendButton_Click(object sender, RoutedEventArgs e)
@@ -103,6 +104,7 @@ namespace NetworkPragramming
                 }
             }
             await Task.Delay(1000);
+            UpdateData(ClientLog);
             Sync();
         }
 
@@ -156,20 +158,26 @@ namespace NetworkPragramming
                     {
                         foreach (var message in response.messages)
                         {
-                            str += message.Moment + "  Asd :   " + message + "\n";
+                            
                             // та оновлюємо момент синхронізації
                             if (message.Moment > lastSyncMoment)
                             {
+                                Dispatcher.Invoke(() => {
+                                    var temp = new ListBoxItem();
+                                    temp.Tag = message.Moment + "%" + message + str;
+                                    
+                                    ClientLog.Items.Add(temp);
+                                    
+
+                                });
                                 lastSyncMoment = message.Moment;
                             }
                         }
                     }
+                    
                 }
                 // Виводимо відповідь на лог
-                Dispatcher.Invoke(() => {
-                    ClientLog.Text += str;
-
-                    });
+                
                 // Повідомляємо сервер про розрив сокету
                 clientSocket.Shutdown(SocketShutdown.Both);
                 // Звільняємо ресурс
@@ -215,5 +223,23 @@ namespace NetworkPragramming
             return;
            
         }
+        #region HW
+        private void UpdateData(ListBox listBox)
+        {
+            foreach(ListBoxItem listBoxItem in listBox.Items)
+            {
+                var temp = listBoxItem.Tag.ToString().Split('%');
+                if (Convert.ToDateTime(temp[0]).Day == DateTime.Now.Day)
+                {
+                    listBoxItem.Content = "Сьогодні : " + Convert.ToDateTime(temp.First()).ToString("t") + " -> " + temp[1];
+                }
+                else
+                {
+                    listBoxItem.Content = Convert.ToDateTime(listBoxItem.Tag).ToString() + "   " + temp[1];
+                }
+                
+            }
+        }
+        #endregion
     }
 }

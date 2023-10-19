@@ -24,5 +24,26 @@
                         Click="ClientButton_Click"></Button>
             </UniformGrid>
         </GroupBox>
+        <GroupBox Header="Email">
+            
+                <Button x:Name="EmailButton"
+                Content="Email"
+                Margin="10 5"
+                Padding="0 4 0 7"
+                Click="EmailButton_Click"></Button>
+               
+           
+        </GroupBox>
+
+        <GroupBox Header="Code Confirm Email">
+
+            <Button x:Name="ConfirmButton"
+        Content="Send Code"
+        Margin="10 5"
+        Padding="0 4 0 7"
+        Click="ConfirmButton_Click"></Button>
+
+
+        </GroupBox>
     </StackPanel>
 </Window>

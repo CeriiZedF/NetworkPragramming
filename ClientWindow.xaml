@@ -62,7 +62,7 @@
                 Click="SendButton_Click"/>
         </DockPanel>
 
-        <TextBlock Grid.Row="1" Grid.ColumnSpan="2"
+        <ListBox Grid.Row="1" Grid.ColumnSpan="2"
                x:Name="ClientLog"/>
     </Grid>
 </Window>
