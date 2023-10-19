@@ -16,3 +16,5 @@ https://github.com/CeriiZedF/NetworkPragramming/blob/40fb4670f1bd3f645b5ccf1ad32
   писати "сьогодні" та час. Якщо старші за день,
   то ще й додавати дату. При зміні дати оновлювати відображення
   Створити Гугл-акаунт, встановити двофакторну перевірку.
+https://github.com/CeriiZedF/NetworkPragramming/blob/76a78203a9292bb031a0066b9c21cea201b70e80/ClientWindow.xaml.cs#L226
+
