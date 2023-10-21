@@ -14,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace NetworkPragramming
 {
@@ -95,6 +96,7 @@ namespace NetworkPragramming
             };
 
         }
+
         private void SendButton_Click(object sender, RoutedEventArgs e)
         {
             SmtpClient? smtpClient = GetSmtpClient();
@@ -127,6 +129,14 @@ namespace NetworkPragramming
             ContentType pngType1 = new("image/mpeg");
             mailMessage.Attachments.Add(
                 new Attachment("Jump_01.mp3", pngType1));
+
+            ContentType txtType2 = new("text/plain");
+            mailMessage.Attachments.Add(
+                new Attachment("privacy.txt", txtType2));
+
+            ContentType docxType3 = new("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+            mailMessage.Attachments.Add(
+                new Attachment("privacy.docx", docxType3));
 
             smtpClient.Send(mailMessage);
             MessageBox.Show("Надіслано");

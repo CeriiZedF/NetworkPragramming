@@ -1,0 +1,30 @@
+﻿<Window x:Class="NetworkPragramming.HttpWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NetworkPragramming"
+        mc:Ignorable="d"
+        Title="HttpWindow" Height="450" Width="300">
+    <StackPanel Orientation="Vertical">
+        <Button x:Name="get1Button" 
+                Content="Get"
+                Click="get1Button_Click"></Button>
+        <Button x:Name="ratesButton" 
+                Content="Rates"
+                Click="ratesButton_Click"></Button>
+        <Button x:Name="popularButton" 
+                Content="EUR USD XAU"
+                Click="popularButton_Click"></Button>
+        <Button x:Name="xmlButton" 
+                Content="XML"
+                Click="xmlButton_Click"></Button>
+        <Button x:Name="jsonButton" 
+                Content="JSON"
+                Click="jsonButton_Click"></Button>
+        <ScrollViewer x:Name="scrollViewer" 
+                FontFamily="Courier New" 
+                Height="330">
+        </ScrollViewer>
+    </StackPanel>
+</Window>

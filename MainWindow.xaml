@@ -45,5 +45,19 @@
 
 
         </GroupBox>
+        <GroupBox Header="Http">
+            <Button x:Name="HttpButton"
+                Content="Send Code"
+                Margin="10 5"
+                Padding="0 4 0 7"
+                Click="HttpButton_Click"></Button>
+        </GroupBox>
+        <GroupBox Header="Crypto Graph">
+            <Button x:Name="graphCryptoButton"
+        Content="Graph"
+        Margin="10 5"
+        Padding="0 4 0 7"
+        Click="graphCryptoButton_Click"></Button>
+        </GroupBox>
     </StackPanel>
 </Window>

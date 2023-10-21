@@ -14,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Data;
 
 namespace NetworkPragramming
 {
@@ -30,23 +31,35 @@ namespace NetworkPragramming
 
         private void SignUpButton_Click(object sender, RoutedEventArgs e)
         {
-            using System.Data.SqlClient.SqlConnection connection = new System.Data.SqlClient.SqlConnection(ConnectionString);
-            connection.Open();
-            using SqlCommand command = connection.CreateCommand();
-            String code = Guid.NewGuid().ToString()[..6].ToUpper();
-            command.CommandText = 
-                "INSERT INTO Users(Email, Password, ConfirmCode)" +
-                $" VALUES (N'{textBoxEmail.Text}', N'{textBoxPassword.Text}', '{code}')";
-            command.ExecuteNonQuery();
+            try
+            {
+               
+                using SqlConnection connection = new(ConnectionString);
+                connection.Open();
 
-            using SmtpClient smtpClient = GetSmtpClient();
-            smtpClient?.Send(
-                App.GetConfiguration("smtp:email"),
-                textBoxEmail.Text,
-                "SignUp SuccessFull",
-                $"Congratulations! To confirm Email use code: {code}");
+                using SqlCommand command = connection.CreateCommand();
+                string code = Guid.NewGuid().ToString()[..6].ToUpper();
+                command.CommandText = "INSERT INTO [Users](Email, Password, ConfirmCode) " +
+                                      $"VALUES(N'{textBoxEmail.Text}', N'{passwordBox.Password}', '{code}')";
+                command.ExecuteNonQuery();
 
-            MessageBox.Show("Check Email!!!");
+               
+                using SmtpClient? smtpClient = GetSmtpClient();
+                if (smtpClient is null) { MessageBox.Show("Не удалось подключиться к smtp..."); return; }
+
+                MailMessage mailMessage = new MailMessage(
+                    App.GetConfiguration("smtp:email")!,
+                    textBoxEmail.Text,
+                    "Sign up seccussfull",
+                    $"Congratulations! To confirm Email use code: <span style='color: tomato; font-weight: bold;'>{code}</span>"
+                )
+                { IsBodyHtml = true };
+
+                smtpClient.Send(mailMessage);
+
+                MessageBox.Show("Check Email");
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
 
         private SmtpClient? GetSmtpClient()
@@ -107,48 +120,53 @@ namespace NetworkPragramming
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-            if(ConfirmContainer.Tag is String savedCode)
+            if (confirmContainer.Tag is string savedCode)
             {
-                if(savedCode.Equals(savedCode))
+                if (textBoxCode.Text.Equals(savedCode))
                 {
-                    LogTextBlock.Text += "Email confirmed\n";
+                    using SqlConnection connection = new(ConnectionString);
+                    connection.Open();
+
+                    using SqlCommand command = connection.CreateCommand();
+                    command.CommandText = $"UPDATE [Users] SET ConfirmCode = NULL " +
+                                          $"WHERE [Email] = '{textBoxEmail.Text}' AND [Password] = '{passwordBox.Password}'";
+                    command.ExecuteNonQuery();
+
+                    confirmContainer.Visibility = Visibility.Hidden;
+                    textBlockLog.Text += "Email confirmed!\n";
                 }
                 else
                 {
-                    LogTextBlock.Text += "Email not confirmed\n";
+                    textBlockLog.Text += "Email not confirmed!\n";
                 }
             }
         }
 
         private void SignInButton_Click(object sender, RoutedEventArgs e)
         {
-            using System.Data.SqlClient.SqlConnection connection = new System.Data.SqlClient.SqlConnection(ConnectionString);
+            using SqlConnection connection = new(ConnectionString);
             connection.Open();
+
             using SqlCommand command = connection.CreateCommand();
-            String code = Guid.NewGuid().ToString()[..6].ToUpper();
-            command.CommandText =
-                "SELECT * FROM [Users] WHERE " +
-                $"[Email]=N'{textBoxEmail.Text}' " +
-                $"AND [Password]=N'{textBoxPassword.Text}' ";
+            command.CommandText = $"SELECT * FROM [Users] WHERE [Email] = N'{textBoxEmail.Text}' " +
+                                  $"AND [Password] = N'{passwordBox.Password}'";
             using SqlDataReader reader = command.ExecuteReader();
-            if (reader.Read())
+            if (reader.Read()) // пользователь найден
             {
-                if(!reader.IsDBNull(2))
+                if (reader.IsDBNull("ConfirmCode"))  // код Null
                 {
-                    String codes = reader.GetString(2);
-                    ConfirmContainer.Visibility = Visibility.Visible;
-                    textBoxCode.Focus();
-                    LogTextBlock.Text += "Welcome, Email needs confirmation\n";
+                    textBlockLog.Text += "Welcome, Email confirmed\n";
                 }
                 else
                 {
-                    LogTextBlock.Text += "Welcome, Email confirmed\n";
+                    string code = reader.GetString("ConfirmCode");
+                    confirmContainer.Visibility = Visibility.Visible;
+                    confirmContainer.Tag = code;
+                    textBoxCode.Focus();
+                    textBlockLog.Text += "Welcome, Email needs confirmation\n";
                 }
             }
-            else
-            {
-                MessageBox.Show("Credentials incorrect");
-            }
+            else { MessageBox.Show("Credentials incorrect"); }
         }
     }
 }

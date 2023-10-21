@@ -46,5 +46,17 @@ namespace NetworkPragramming
         {
             new AuthWindow().ShowDialog();
         }
+
+        private void HttpButton_Click(object sender, RoutedEventArgs e)
+        {
+            
+            new HttpWindow().ShowDialog();
+          
+        }
+
+        private void graphCryptoButton_Click(object sender, RoutedEventArgs e)
+        {
+            new CryptoWindow().ShowDialog();
+        }
     }
 }

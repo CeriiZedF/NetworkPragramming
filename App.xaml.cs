@@ -25,8 +25,15 @@ namespace NetworkPragramming
                         MessageBoxImage.Error);
                     return null;
                 }
-                settings ??= JsonSerializer.Deserialize<JsonElement>(
-               System.IO.File.ReadAllText("email-settings.json"));
+                try
+                {
+                    settings ??= JsonSerializer.Deserialize<JsonElement>(
+                   System.IO.File.ReadAllText("email-settings.json"));
+                }
+                catch {
+                    MessageBox.Show($"Файл конфігурації '{configFileName}' має неправильну структуру або пошкоджений");
+                    return null;
+                }
                 
             }
             
