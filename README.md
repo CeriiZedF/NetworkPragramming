@@ -47,6 +47,9 @@ https://github.com/CeriiZedF/NetworkPragramming/blob/c13ec0ece5ea636795934729f36
  https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json
  та виводять їх у вигляді тексту на інтерфейс вікна.
  Додати скріншоти
+![JsonText](https://github.com/CeriiZedF/NetworkPragramming/assets/60105990/30b6f11f-eaa1-49d3-af56-31a62df14d8e)
+![XMLText](https://github.com/CeriiZedF/NetworkPragramming/assets/60105990/4a63a569-3617-45fd-9c92-dbc9185fc9ba)
+
 
 8) Д.З. Реалізувати "перенесення" виділення елемента списку:
 при виділенні іншого елемента знімати виділення з попереднього.
